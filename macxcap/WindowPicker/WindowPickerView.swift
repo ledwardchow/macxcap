@@ -3,6 +3,7 @@ import AppKit
 
 struct WindowPickerView: View {
     @StateObject private var vm = WindowPickerViewModel()
+    var title: String
     var onSelect: (WindowInfo) -> Void
     var onCancel: () -> Void
 
@@ -14,7 +15,7 @@ struct WindowPickerView: View {
 
             VStack(spacing: 0) {
                 HStack {
-                    Text("Select a Window to Capture")
+                    Text(title)
                         .font(.headline)
                         .foregroundColor(.white)
                     Spacer()

@@ -10,6 +10,11 @@ struct HotKeyConfig: Codable, Equatable {
         modifiers: UInt32(controlKey | optionKey)
     )
 
+    static let liveDefault = HotKeyConfig(
+        keyCode: UInt32(kVK_ANSI_2),
+        modifiers: UInt32(controlKey | optionKey)
+    )
+
     static func carbonModifiers(from flags: NSEvent.ModifierFlags) -> UInt32 {
         var carbon: UInt32 = 0
         if flags.contains(.command) { carbon |= UInt32(cmdKey) }
@@ -46,7 +51,8 @@ struct HotKeyConfig: Codable, Equatable {
 }
 
 extension HotKeyConfig {
-    static let userDefaultsKey = "hotKeyConfig"
+    static let userDefaultsKey     = "hotKeyConfig"
+    static let liveUserDefaultsKey = "liveHotKeyConfig"
 
     static func load() -> HotKeyConfig {
         guard let data = UserDefaults.standard.data(forKey: userDefaultsKey),
@@ -55,9 +61,22 @@ extension HotKeyConfig {
         return config
     }
 
+    static func loadLive() -> HotKeyConfig {
+        guard let data = UserDefaults.standard.data(forKey: liveUserDefaultsKey),
+              let config = try? JSONDecoder().decode(HotKeyConfig.self, from: data)
+        else { return .liveDefault }
+        return config
+    }
+
     func save() {
         if let data = try? JSONEncoder().encode(self) {
             UserDefaults.standard.set(data, forKey: HotKeyConfig.userDefaultsKey)
+        }
+    }
+
+    func saveLive() {
+        if let data = try? JSONEncoder().encode(self) {
+            UserDefaults.standard.set(data, forKey: HotKeyConfig.liveUserDefaultsKey)
         }
     }
 }

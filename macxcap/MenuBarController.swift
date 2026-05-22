@@ -19,6 +19,12 @@ final class MenuBarController {
         captureItem.target = self
         menu.addItem(captureItem)
 
+        let liveItem = NSMenuItem(title: "Live Capture Window…",
+                                  action: #selector(liveCaptureWindow),
+                                  keyEquivalent: "")
+        liveItem.target = self
+        menu.addItem(liveItem)
+
         menu.addItem(.separator())
 
         let settingsItem = NSMenuItem(title: "Settings…",
@@ -37,7 +43,11 @@ final class MenuBarController {
     }
 
     @objc private func captureWindow() {
-        WindowPickerController.shared.show()
+        WindowPickerController.shared.show(mode: .screenshot)
+    }
+
+    @objc private func liveCaptureWindow() {
+        WindowPickerController.shared.show(mode: .liveCapture)
     }
 
     @objc private func openSettings() {

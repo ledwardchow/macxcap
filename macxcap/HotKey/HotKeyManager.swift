@@ -5,41 +5,41 @@ final class HotKeyManager {
     static let shared = HotKeyManager()
     private init() {}
 
-    private var hotKeyRef: EventHotKeyRef?
+    private var screenshotRef: EventHotKeyRef?
+    private var liveRef: EventHotKeyRef?
     private var handlerRef: EventHandlerRef?
-    // 'mxcp' as a four-character code
-    private let hotKeyID = EventHotKeyID(signature: 0x6D786370, id: 1)
 
-    var config: HotKeyConfig {
+    // 'mxcp' signature; id 1 = screenshot, id 2 = live capture
+    private let sig: OSType = 0x6D786370
+    private var screenshotHotKeyID: EventHotKeyID { EventHotKeyID(signature: sig, id: 1) }
+    private var liveHotKeyID:       EventHotKeyID { EventHotKeyID(signature: sig, id: 2) }
+
+    var screenshotConfig: HotKeyConfig {
         get { HotKeyConfig.load() }
-        set {
-            newValue.save()
-            register()
-        }
+        set { newValue.save(); register() }
+    }
+
+    var liveCaptureConfig: HotKeyConfig {
+        get { HotKeyConfig.loadLive() }
+        set { newValue.saveLive(); register() }
     }
 
     func register() {
         unregister()
         installHandlerIfNeeded()
-        let cfg = config
-        let status = RegisterEventHotKey(
-            cfg.keyCode,
-            cfg.modifiers,
-            hotKeyID,
-            GetApplicationEventTarget(),
-            0,
-            &hotKeyRef
-        )
-        if status != noErr {
-            NSLog("macxcap: RegisterEventHotKey failed with status \(status)")
-        }
+
+        let shot = screenshotConfig
+        RegisterEventHotKey(shot.keyCode, shot.modifiers,
+                            screenshotHotKeyID, GetApplicationEventTarget(), 0, &screenshotRef)
+
+        let live = liveCaptureConfig
+        RegisterEventHotKey(live.keyCode, live.modifiers,
+                            liveHotKeyID, GetApplicationEventTarget(), 0, &liveRef)
     }
 
     func unregister() {
-        if let ref = hotKeyRef {
-            UnregisterEventHotKey(ref)
-            hotKeyRef = nil
-        }
+        if let ref = screenshotRef { UnregisterEventHotKey(ref); screenshotRef = nil }
+        if let ref = liveRef       { UnregisterEventHotKey(ref); liveRef       = nil }
     }
 
     private func installHandlerIfNeeded() {
@@ -54,28 +54,25 @@ final class HotKeyManager {
             { _, event, userData -> OSStatus in
                 guard let userData, let event else { return OSStatus(eventNotHandledErr) }
                 var firedID = EventHotKeyID()
-                GetEventParameter(
-                    event,
-                    EventParamName(kEventParamDirectObject),
-                    EventParamType(typeEventHotKeyID),
-                    nil,
-                    MemoryLayout<EventHotKeyID>.size,
-                    nil,
-                    &firedID
-                )
-                let manager = Unmanaged<HotKeyManager>.fromOpaque(userData).takeUnretainedValue()
-                if firedID.signature == manager.hotKeyID.signature,
-                   firedID.id == manager.hotKeyID.id {
-                    DispatchQueue.main.async {
-                        WindowPickerController.shared.show()
+                GetEventParameter(event,
+                                  EventParamName(kEventParamDirectObject),
+                                  EventParamType(typeEventHotKeyID),
+                                  nil,
+                                  MemoryLayout<EventHotKeyID>.size,
+                                  nil,
+                                  &firedID)
+                let mgr = Unmanaged<HotKeyManager>.fromOpaque(userData).takeUnretainedValue()
+                guard firedID.signature == mgr.sig else { return OSStatus(eventNotHandledErr) }
+                DispatchQueue.main.async {
+                    switch firedID.id {
+                    case 1: WindowPickerController.shared.show(mode: .screenshot)
+                    case 2: WindowPickerController.shared.show(mode: .liveCapture)
+                    default: break
                     }
                 }
                 return noErr
             },
-            1,
-            &eventType,
-            selfPtr,
-            &handlerRef
+            1, &eventType, selfPtr, &handlerRef
         )
     }
 }

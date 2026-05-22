@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		1D229B62165299F75D13DD35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAB7107ECFC3FAC2973469C5 /* Assets.xcassets */; };
+		25F91A03D978571756831A03 /* LiveStreamManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85050A131B4B113455FDA76E /* LiveStreamManager.swift */; };
 		59272B8248BBC1A14D086AFC /* ShortcutRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7856F0B147197AB491EF709A /* ShortcutRecorderView.swift */; };
 		66D95AB798B20D89DBA9553A /* MenuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9725C5EC513704B8CFD07FD /* MenuBarController.swift */; };
+		7A29AC5DDA9C4BE8B4031FB9 /* LiveCaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D73450522AE971C521EC /* LiveCaptureView.swift */; };
 		8BADA8CA5965A20AA860CA14 /* DisplayStreamCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C69A46838EED87EBD47A90 /* DisplayStreamCapture.swift */; };
 		9595EDCCFE2062245B3A4AF8 /* WindowPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE29A51B9D0230F7D4AB905 /* WindowPickerView.swift */; };
 		A77F2424F37C5E0A8ABBDCD8 /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94365D1E3E5DC4D93C0DD754 /* SettingsWindowController.swift */; };
@@ -21,17 +23,21 @@
 		F31D3325379A13946EE7D946 /* HotKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23FEDC2046FC86DB619AE16 /* HotKeyManager.swift */; };
 		F39B55BC3DC14F66C405148D /* WindowPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DC915F9DFC7BC250581939 /* WindowPickerController.swift */; };
 		F48D59EC1CD3A0AD627C7BDC /* HotKeyConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CE087A6EF035D98DCEEB65 /* HotKeyConfig.swift */; };
+		F4BF109FC855C67BC21AE12D /* LiveCaptureWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2364C0BA8A1AD1F621D72F /* LiveCaptureWindowController.swift */; };
 		F7A8669C33FFA26485AE081F /* WindowInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D26F365589D761A58A1F6A /* WindowInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F19D73450522AE971C521EC /* LiveCaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveCaptureView.swift; sourceTree = "<group>"; };
 		29AB64BB650768E1823B195D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2AE76E298F0DD1D869C09C64 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		37C69A46838EED87EBD47A90 /* DisplayStreamCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayStreamCapture.swift; sourceTree = "<group>"; };
+		3F2364C0BA8A1AD1F621D72F /* LiveCaptureWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveCaptureWindowController.swift; sourceTree = "<group>"; };
 		45B835B8ACEDE2B22B7F4480 /* macxcap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macxcap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B9333A79EDB7E0B4CB905C /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		5AB63EFCDFDF68D6C1F20B5C /* macxcap.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macxcap.entitlements; sourceTree = "<group>"; };
 		7856F0B147197AB491EF709A /* ShortcutRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutRecorderView.swift; sourceTree = "<group>"; };
+		85050A131B4B113455FDA76E /* LiveStreamManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveStreamManager.swift; sourceTree = "<group>"; };
 		94365D1E3E5DC4D93C0DD754 /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
 		952F4864DD687EA356BF914B /* WindowPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowPickerViewModel.swift; sourceTree = "<group>"; };
 		ABE29A51B9D0230F7D4AB905 /* WindowPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowPickerView.swift; sourceTree = "<group>"; };
@@ -63,6 +69,16 @@
 				C23FEDC2046FC86DB619AE16 /* HotKeyManager.swift */,
 			);
 			path = HotKey;
+			sourceTree = "<group>";
+		};
+		63E452A9A3F1708BDDFB0482 /* LiveCapture */ = {
+			isa = PBXGroup;
+			children = (
+				1F19D73450522AE971C521EC /* LiveCaptureView.swift */,
+				3F2364C0BA8A1AD1F621D72F /* LiveCaptureWindowController.swift */,
+				85050A131B4B113455FDA76E /* LiveStreamManager.swift */,
+			);
+			path = LiveCapture;
 			sourceTree = "<group>";
 		};
 		64D1FF9F12C678FE06EA8ACB /* Capture */ = {
@@ -111,6 +127,7 @@
 				C9725C5EC513704B8CFD07FD /* MenuBarController.swift */,
 				64D1FF9F12C678FE06EA8ACB /* Capture */,
 				603B0FB40717C9A7530E2E8D /* HotKey */,
+				63E452A9A3F1708BDDFB0482 /* LiveCapture */,
 				7CE5C945EAC3B74AFF1FC819 /* Resources */,
 				4A4EECD37B09EC2E9315FEFB /* Settings */,
 				B920029841A5003EA18A6763 /* WindowPicker */,
@@ -200,6 +217,9 @@
 				8BADA8CA5965A20AA860CA14 /* DisplayStreamCapture.swift in Sources */,
 				F48D59EC1CD3A0AD627C7BDC /* HotKeyConfig.swift in Sources */,
 				F31D3325379A13946EE7D946 /* HotKeyManager.swift in Sources */,
+				7A29AC5DDA9C4BE8B4031FB9 /* LiveCaptureView.swift in Sources */,
+				F4BF109FC855C67BC21AE12D /* LiveCaptureWindowController.swift in Sources */,
+				25F91A03D978571756831A03 /* LiveStreamManager.swift in Sources */,
 				66D95AB798B20D89DBA9553A /* MenuBarController.swift in Sources */,
 				B4F7894E2E36ADB12AAF35D6 /* ScreenCaptureManager.swift in Sources */,
 				DA29BA29D257E68CF16CC754 /* SettingsView.swift in Sources */,

@@ -1,31 +1,42 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @State private var config = HotKeyConfig.load()
+    @State private var screenshotConfig  = HotKeyConfig.load()
+    @State private var liveCaptureConfig = HotKeyConfig.loadLive()
 
     var body: some View {
         Form {
             Section {
-                HStack {
-                    Text("Capture shortcut")
-                    Spacer()
-                    ShortcutRecorderView(config: $config)
-                        .frame(width: 140, height: 26)
-                }
+                shortcutRow(label: "Screenshot", config: $screenshotConfig)
             } header: {
-                Text("Global Shortcut")
-            } footer: {
-                Text("Click the shortcut field, then press a new key combination.")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                Text("Screenshot  (⌃⌥1 default)")
+            }
+            Section {
+                shortcutRow(label: "Live capture", config: $liveCaptureConfig)
+            } header: {
+                Text("Live Capture  (⌃⌥2 default)")
             }
         }
         .formStyle(.grouped)
-        .frame(width: 380)
+        .frame(width: 400)
         .padding(.vertical, 8)
-        .onChange(of: config) { newConfig in
+        .onChange(of: screenshotConfig) { newConfig in
             newConfig.save()
-            HotKeyManager.shared.config = newConfig
+            HotKeyManager.shared.screenshotConfig = newConfig
+        }
+        .onChange(of: liveCaptureConfig) { newConfig in
+            newConfig.saveLive()
+            HotKeyManager.shared.liveCaptureConfig = newConfig
+        }
+    }
+
+    @ViewBuilder
+    private func shortcutRow(label: String, config: Binding<HotKeyConfig>) -> some View {
+        HStack {
+            Text(label)
+            Spacer()
+            ShortcutRecorderView(config: config)
+                .frame(width: 140, height: 26)
         }
     }
 }
