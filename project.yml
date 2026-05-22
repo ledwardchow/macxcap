@@ -1,0 +1,31 @@
+name: macxcap
+options:
+  bundleIdPrefix: com.ledwardchow
+  deploymentTarget:
+    macOS: "13.0"
+  xcodeVersion: "16.0"
+
+targets:
+  macxcap:
+    type: application
+    platform: macOS
+    deploymentTarget: "13.0"
+    sources:
+      - path: macxcap
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ledwardchow.macxcap
+        PRODUCT_NAME: macxcap
+        SWIFT_VERSION: "5.9"
+        MACOSX_DEPLOYMENT_TARGET: "13.0"
+        ENABLE_HARDENED_RUNTIME: YES
+        CODE_SIGN_STYLE: Automatic
+        INFOPLIST_FILE: macxcap/Resources/Info.plist
+        CODE_SIGN_ENTITLEMENTS: macxcap/Resources/macxcap.entitlements
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/../Frameworks"
+        FRAMEWORK_SEARCH_PATHS: "$(inherited)"
+        # Suppress deprecation warnings for CGWindowListCreateImage (deprecated macOS 14)
+        GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS: NO
+    scheme:
+      testTargets: []
